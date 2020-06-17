@@ -1,0 +1,158 @@
+@import 'reset';
+
+$background: rgb(29, 255, 138);
+$red: #e63043;
+$light-red: #f64d2a;
+$tomato: #ff4b3e;
+$yellow: #ffb20f;
+$orange: #ff9422;
+$dark-orange: #ff6e2b;
+
+@mixin  all-color($property) {
+    background-color: $property;
+    color: $property;
+}
+
+%year {
+    font-size: 50px;
+    position: absolute;
+}
+
+%line {
+    width: 3px;
+    background-color: #000;
+    display: block;
+    position: absolute;
+}
+
+%little-circle {
+    width: 10px;
+    height: 10px;
+    display: block;
+    position: absolute;
+    border: 3px solid #000000;
+}
+
+body {
+    background-color: $background;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timeline {
+    min-width: 90%;
+    background-color: #1fe07d;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    counter-reset: year 2011;
+    position: relative;
+
+    &__item {
+        width: 180px;
+        height: 100%;
+        background-color: #e63043;
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    &__first {
+            @include all-color($red);
+        }
+
+    &__second {
+        @include all-color($light-red);
+    }
+
+    &__third {
+        @include all-color($tomato);
+    }
+
+    &__fourth {
+        @include all-color($yellow);
+    }
+
+    &__fifth {
+        @include all-color($orange);
+    }
+
+    &__sixth {
+        @include all-color($dark-orange);
+    }
+
+    &__item:not(:last-child) {
+        margin-right: 5px;
+    }
+
+    &__item::before {
+        content: counter(year);
+        counter-increment: year;
+    }
+
+    &__item:nth-child(odd)::before {
+        @extend %year;
+        top: 100%;
+    }
+
+    &__item:nth-child(even)::before {
+        @extend %year;
+        bottom: 100%;
+    }
+
+    &__circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        position: absolute;
+        left: calc(50% - 50px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__item:nth-child(odd) &__circle {
+        bottom: 250%;
+    }
+
+    &__item:nth-child(odd) &__circle:before{
+        content: '';
+        @extend %line;
+        height: 145px;
+        top: 100%;
+    }
+
+    &__item:nth-child(odd) &__circle:after{
+        content: '';
+        @extend %little-circle;
+        border-radius: 50%;
+        top: calc(100% + 145px);
+    }
+
+    &__item:nth-child(even) &__circle {
+        top: 250%;
+    }
+
+    &__item:nth-child(even) &__circle:before{
+        content: '';
+        @extend %line;
+        height: 140px;
+        bottom: 100%;
+    }
+
+    &__item:nth-child(even) &__circle:after{
+        content: '';
+        @extend %little-circle;
+        border-radius: 50%;
+        bottom: calc(100% + 140px);
+    }
+
+    
+}
+
+.icon {
+    color: #ffffff;
+    font-size: 60px;
+}
